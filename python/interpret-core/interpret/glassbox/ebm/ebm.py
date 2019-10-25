@@ -11,6 +11,7 @@ from ...api.base import ExplainerMixin
 from ...api.templates import FeatureValueExplanation
 from ...provider.compute import JobLibProvider
 from ...utils import gen_name_from_class, gen_global_selector, gen_local_selector
+from ...visual.interactive import get_compute_provider, set_compute_provider
 
 import numpy as np
 from warnings import warn
@@ -869,7 +870,12 @@ class BaseEBM(BaseEstimator):
             estimator.set_params(random_state=self.random_state + i)
             estimators.append(estimator)
 
-        provider = JobLibProvider(n_jobs=self.n_jobs)
+        # TODO: Refactor later.
+        provider = get_compute_provider()
+        if provider is None:
+            provider = JobLibProvider(n_jobs=self.n_jobs)
+            set_compute_provider(provider)
+        # provider = JobLibProvider(n_jobs=self.n_jobs)
 
         def train_model(estimator, X, y):
             return estimator.fit(X, y)

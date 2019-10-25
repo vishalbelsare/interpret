@@ -13,6 +13,7 @@ this.app_addr = None
 
 this._preserve_provider = None
 this.visualize_provider = None
+this.compute_provider = None
 
 
 def get_visualize_provider():
@@ -26,6 +27,20 @@ def set_visualize_provider(provider):
     else:  # pragma: no cover
         raise ValueError(
             "Object of type {} is not a visualize provider.".format(type(provider))
+        )
+
+
+def get_compute_provider():
+    return this.compute_provider
+
+
+def set_compute_provider(provider):
+    has_parallel_method = hasattr(provider, "parallel")
+    if provider is None or has_parallel_method:
+        this.compute_provider = provider
+    else:  # pragma: no cover
+        raise ValueError(
+            "Object of type {} is not a compute provider.".format(type(provider))
         )
 
 
