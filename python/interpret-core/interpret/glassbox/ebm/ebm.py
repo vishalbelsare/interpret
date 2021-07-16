@@ -7,7 +7,7 @@ from typing import DefaultDict
 from interpret.provider.visualize import PreserveProvider
 from ...utils import gen_perf_dicts
 from .utils import DPUtils, EBMUtils
-from .internal import Native
+from .native import Native
 from .postprocessing import multiclass_postprocess
 from ...utils import unify_data, autogen_schema, unify_vector
 from ...api.base import ExplainerMixin
